@@ -14,7 +14,9 @@ namespace Distill.Tests
         {
             var provider = new CodeModelProvider(@"E:\Test.cpp", new List<string>(), new List<string>(),
                                                  Language.CPlusPlus, Arch.AVR32);
-            provider.Process(@"class C{};");
+            var classes = provider.Process(@"class MyClass{};");
+            Assert.AreEqual(1, classes.Count());
+            Assert.AreEqual("MyClass", classes[0].Name);
         }
     }
 }

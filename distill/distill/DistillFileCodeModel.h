@@ -2,11 +2,9 @@
 
 namespace Distill
 {
-	/*
-	public ref class DistillFileCodeModel : public EnvDTE::FileCodeModel
+	public ref class DistillFileCodeModel // : public EnvDTE::FileCodeModel
 	{
-
-		
+	public:
+		void Foo(){}
 	};
-	*/
 }

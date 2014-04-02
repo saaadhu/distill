@@ -14,6 +14,8 @@ namespace clang
 class StoredDiagnosticClient;
 
 namespace Distill {
+	ref class DistillFileCodeModel;
+	ref class DistillCodeClass;
 
 	public enum class Arch
 	{
@@ -33,7 +35,7 @@ namespace Distill {
 	{
 	public:
 		CodeModelProvider (String ^file, List<String ^> ^pSymbols, List<String ^> ^iPaths, Language lang, Arch a);
-		void Process(String ^ contents);
+		List<DistillCodeClass ^>^ Process(String^ contents);
 
 	private:
 

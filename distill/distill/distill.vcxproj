@@ -86,6 +86,8 @@
   <ItemGroup>
     <ClInclude Include="distill.h" />
     <ClInclude Include="DistillASTConsumer.h" />
+    <ClInclude Include="DistillCodeClass.h" />
+    <ClInclude Include="DistillCodeClassWrapper.h" />
     <ClInclude Include="DistillFileCodeModel.h" />
     <ClInclude Include="DistillFrontEndAction.h" />
     <ClInclude Include="DistillVisitor.h" />

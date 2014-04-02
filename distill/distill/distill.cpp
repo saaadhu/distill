@@ -13,6 +13,8 @@
 #include "StringUtilities.h"
 #include "DistillFrontendAction.h"
 #include "DistillFileCodeModel.h"
+#include "DistillCodeClass.h"
+#include "DistillCodeClassWrapper.h"
 
 using namespace Distill;
 using namespace System::Runtime::InteropServices;
@@ -55,7 +57,7 @@ CodeModelProvider::CodeModelProvider(String ^file, List<String ^> ^pSymbols, Lis
 	filePath = (const char *) ToCString(file);
 }
 
-void CodeModelProvider::Process(String ^contents)
+List<DistillCodeClass ^>^ CodeModelProvider::Process(String ^contents)
 {
 	const char *pContents = ToCString(contents);
 	m_pInstance = CreateCompilerInstance();
@@ -66,14 +68,25 @@ void CodeModelProvider::Process(String ^contents)
 
 	m_pInstance->setInvocation(m_pInvocation);
 
-	DistillFrontendAction action;
+	DistillFileCodeModel^ root = gcnew DistillFileCodeModel();
+
+	std::vector<DistillCodeClassWrapper> classes;
+	DistillFrontendAction action (classes);
 	m_pInstance->ExecuteAction (action);
+
+	int length = classes.size();
+
+	List<DistillCodeClass ^>^ c = gcnew List<DistillCodeClass ^>();
+	for (int i = 0 ; i<length; ++i)
+	{
+		c->Add(gcnew DistillCodeClass(classes[i]));
+	}
 
 	Marshal::FreeHGlobal(IntPtr((void *)pContents));
 	m_pInvocation->getPreprocessorOpts().clearRemappedFiles();
 
 	DestroyCompilerInstance(m_pInstance);
-	//return nullptr;
+	return c;
 }
 
 clang::CompilerInstance* CodeModelProvider::CreateCompilerInstance()
