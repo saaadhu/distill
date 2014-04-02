@@ -74,11 +74,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Reference Include="EnvDTE" />
-    <Reference Include="EnvDTE100" />
-    <Reference Include="EnvDTE80" />
-    <Reference Include="EnvDTE90" />
-    <Reference Include="EnvDTE90a" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -86,9 +81,7 @@
   <ItemGroup>
     <ClInclude Include="distill.h" />
     <ClInclude Include="DistillASTConsumer.h" />
-    <ClInclude Include="DistillCodeClass.h" />
     <ClInclude Include="DistillCodeClassWrapper.h" />
-    <ClInclude Include="DistillFileCodeModel.h" />
     <ClInclude Include="DistillFrontEndAction.h" />
     <ClInclude Include="DistillVisitor.h" />
     <ClInclude Include="resource.h" />
@@ -111,6 +104,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Types\Distill.Types.csproj">
+      <Project>{cd6476b6-3984-4677-8fdf-ddb2de452da4}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

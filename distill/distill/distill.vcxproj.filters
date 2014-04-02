@@ -36,12 +36,6 @@
     <ClInclude Include="DistillVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DistillFileCodeModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DistillCodeClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DistillCodeClassWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>

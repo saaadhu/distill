@@ -12,11 +12,10 @@
 #include "distill.h"
 #include "StringUtilities.h"
 #include "DistillFrontendAction.h"
-#include "DistillFileCodeModel.h"
-#include "DistillCodeClass.h"
 #include "DistillCodeClassWrapper.h"
 
 using namespace Distill;
+using namespace Distill::Types;
 using namespace System::Runtime::InteropServices;
 
 class StoredDiagnosticClient : public clang::DiagnosticConsumer
@@ -57,7 +56,7 @@ CodeModelProvider::CodeModelProvider(String ^file, List<String ^> ^pSymbols, Lis
 	filePath = (const char *) ToCString(file);
 }
 
-List<DistillCodeClass ^>^ CodeModelProvider::Process(String ^contents)
+DistillFileCodeModel^ CodeModelProvider::Process(String ^contents)
 {
 	const char *pContents = ToCString(contents);
 	m_pInstance = CreateCompilerInstance();
@@ -68,25 +67,28 @@ List<DistillCodeClass ^>^ CodeModelProvider::Process(String ^contents)
 
 	m_pInstance->setInvocation(m_pInvocation);
 
-	DistillFileCodeModel^ root = gcnew DistillFileCodeModel();
-
 	std::vector<DistillCodeClassWrapper> classes;
 	DistillFrontendAction action (classes);
 	m_pInstance->ExecuteAction (action);
 
 	int length = classes.size();
 
-	List<DistillCodeClass ^>^ c = gcnew List<DistillCodeClass ^>();
+	DistillFileCodeModel ^model = gcnew DistillFileCodeModel();
+	List<System::Object ^>^ c = gcnew List<System::Object ^>();
 	for (int i = 0 ; i<length; ++i)
 	{
-		c->Add(gcnew DistillCodeClass(classes[i]));
+		DistillCodeClass ^cl = gcnew DistillCodeClass();
+		cl->Name = ToManagedString(classes[i].Name.c_str());
+		c->Add(cl);
 	}
 
 	Marshal::FreeHGlobal(IntPtr((void *)pContents));
 	m_pInvocation->getPreprocessorOpts().clearRemappedFiles();
 
 	DestroyCompilerInstance(m_pInstance);
-	return c;
+	DistillCodeElements ^elements = gcnew DistillCodeElements(c);
+	model->CodeElements = elements;
+	return model;
 }
 
 clang::CompilerInstance* CodeModelProvider::CreateCompilerInstance()

@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Distill.Types", "Types\Distill.Types.csproj", "{CD6476B6-3984-4677-8FDF-DDB2DE452DA4}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = distill.vsmdi
@@ -45,6 +47,16 @@ Global
 		{62A686EC-F6A8-4A35-831D-E896F5171264}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{62A686EC-F6A8-4A35-831D-E896F5171264}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{62A686EC-F6A8-4A35-831D-E896F5171264}.Release|Win32.ActiveCfg = Release|Any CPU
+		{CD6476B6-3984-4677-8FDF-DDB2DE452DA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD6476B6-3984-4677-8FDF-DDB2DE452DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD6476B6-3984-4677-8FDF-DDB2DE452DA4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CD6476B6-3984-4677-8FDF-DDB2DE452DA4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CD6476B6-3984-4677-8FDF-DDB2DE452DA4}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{CD6476B6-3984-4677-8FDF-DDB2DE452DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD6476B6-3984-4677-8FDF-DDB2DE452DA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD6476B6-3984-4677-8FDF-DDB2DE452DA4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CD6476B6-3984-4677-8FDF-DDB2DE452DA4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CD6476B6-3984-4677-8FDF-DDB2DE452DA4}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

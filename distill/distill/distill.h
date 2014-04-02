@@ -4,6 +4,7 @@
 
 using namespace System;
 using namespace System::Collections::Generic;
+using namespace Distill::Types;
 
 namespace clang
 {
@@ -14,8 +15,6 @@ namespace clang
 class StoredDiagnosticClient;
 
 namespace Distill {
-	ref class DistillFileCodeModel;
-	ref class DistillCodeClass;
 
 	public enum class Arch
 	{
@@ -35,7 +34,7 @@ namespace Distill {
 	{
 	public:
 		CodeModelProvider (String ^file, List<String ^> ^pSymbols, List<String ^> ^iPaths, Language lang, Arch a);
-		List<DistillCodeClass ^>^ Process(String^ contents);
+		Distill::Types::DistillFileCodeModel ^Process(String^ contents);
 
 	private:
 
