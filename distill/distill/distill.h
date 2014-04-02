@@ -5,16 +5,24 @@
 using namespace System;
 using namespace System::Collections::Generic;
 
+namespace clang
+{
+	class CompilerInstance;
+	class CompilerInvocation;
+}
+
+class StoredDiagnosticClient;
+
 namespace Distill {
 
-	public enum Arch
+	public enum class Arch
 	{
 		AVR,
 		AVR32,
 		ARM
 	};
 
-	public enum Language {
+	public enum class Language {
 		C,
 		CPlusPlus,
 		C99,
@@ -24,8 +32,23 @@ namespace Distill {
 	public ref class CodeModelProvider
 	{
 	public:
-		CodeModelProvider (String ^fileContents, List<String ^> ^predefinedSymbols, List<String ^> ^includePaths, Language language, Arch arch)
-		{
-		}
+		CodeModelProvider (String ^file, List<String ^> ^pSymbols, List<String ^> ^iPaths, Language lang, Arch a);
+		void Process(String ^ contents);
+
+	private:
+
+		clang::CompilerInstance* CreateCompilerInstance();
+		void DestroyCompilerInstance (clang::CompilerInstance *);
+
+		clang::CompilerInvocation* CreateInvocation();
+
+		clang::CompilerInvocation* m_pInvocation;
+		clang::CompilerInstance *m_pInstance;
+		StoredDiagnosticClient *m_pDiagnosticClient;
+		const char *filePath;
+		List<String ^> ^includePaths;
+		List<String ^> ^predefinedSymbols;
+		Language language;
+		Arch arch;
 	};
 }

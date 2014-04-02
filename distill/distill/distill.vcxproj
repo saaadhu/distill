@@ -64,11 +64,13 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include;</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>clang-tblgen.lib;clang.lib;clangAnalysis.lib;clangARCMigrate.lib;clangAST.lib;clangASTMatchers.lib;clangBasic.lib;clangCodeGen.lib;clangDriver.lib;clangEdit.lib;clangFormat.lib;clangFrontend.lib;clangFrontendTool.lib;clangIndex.lib;clangLex.lib;clangParse.lib;clangRewriteCore.lib;clangRewriteFrontend.lib;clangSema.lib;clangSerialization.lib;clangStaticAnalyzerCheckers.lib;clangStaticAnalyzerCore.lib;clangStaticAnalyzerFrontend.lib;clangTooling.lib;libclang.lib;llvm-tblgen.lib;LLVMAnalysis.lib;LLVMAsmParser.lib;LLVMAsmPrinter.lib;LLVMAVRAsmPrinter.lib;LLVMAVRCodeGen.lib;LLVMAVRDesc.lib;LLVMAVRInfo.lib;LLVMBitReader.lib;LLVMBitWriter.lib;LLVMCodeGen.lib;LLVMCore.lib;LLVMInstCombine.lib;LLVMInstrumentation.lib;LLVMipa.lib;LLVMipo.lib;LLVMIRReader.lib;LLVMLinker.lib;LLVMMC.lib;LLVMMCParser.lib;LLVMObjCARCOpts.lib;LLVMObject.lib;LLVMScalarOpts.lib;LLVMSelectionDAG.lib;LLVMSupport.lib;LLVMTableGen.lib;LLVMTarget.lib;LLVMTransformUtils.lib;LLVMVectorize.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\Release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -83,16 +85,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distill.h" />
+    <ClInclude Include="DistillASTConsumer.h" />
+    <ClInclude Include="DistillFileCodeModel.h" />
+    <ClInclude Include="DistillFrontEndAction.h" />
+    <ClInclude Include="DistillVisitor.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="StringUtilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="distill.cpp" />
+    <ClCompile Include="DistillVisitor.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="StringUtilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.ico" />
