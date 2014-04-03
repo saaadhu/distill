@@ -21,11 +21,14 @@ namespace Distill
 			std::vector<DistillCodeFunctionWrapper>& functions,
 			std::vector<DistillCodeFunctionWrapper>& methods,
 			std::vector<DistillCodeVariableWrapper>& variables,
-			std::vector<DistillCodeStructWrapper>& structs
-			) : m_classes(classes), m_functions(functions), m_methods(methods), m_variables(variables), m_struct(structs) {}
+			std::vector<DistillCodeStructWrapper>& structs,
+			std::vector<DistillCodeStructWrapper>& unions
+			) : m_classes(classes), m_functions(functions), m_methods(methods), m_variables(variables), m_struct(structs), m_union(unions) {}
 
 		bool TraverseDecl(clang::Decl *D);
 		bool VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration);
+		bool VisitVarDecl(clang::VarDecl *Declaration);
+		bool VisitFieldDecl(clang::FieldDecl *Declaration);
 		bool VisitFunctionDecl(clang::FunctionDecl *Declaration);
 		bool VisitCXXMethodDecl(clang::FunctionDecl *Declaration);
 
@@ -35,5 +38,6 @@ namespace Distill
 		std::vector<DistillCodeFunctionWrapper> &m_methods;
 		std::vector<DistillCodeVariableWrapper> &m_variables;
 		std::vector<DistillCodeStructWrapper> &m_struct;
+		std::vector<DistillCodeStructWrapper> &m_union;
 	};
 }

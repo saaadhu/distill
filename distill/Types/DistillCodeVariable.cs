@@ -7,6 +7,11 @@ namespace Distill.Types
 {
   public class DistillCodeVariable : EnvDTE.CodeVariable, EnvDTE.CodeElement
   {
+    public DistillCodeVariable()
+    {
+
+    }
+
     public EnvDTE.CodeElements Children
     {
       get { throw new NotImplementedException(); }
@@ -39,8 +44,8 @@ namespace Distill.Types
 
     public string FullName
     {
-      get { throw new NotImplementedException(); }
-      set { }
+      get;
+      set;
     }
 
     public EnvDTE.TextPoint GetEndPoint(EnvDTE.vsCMPart Part = EnvDTE.vsCMPart.vsCMPartWholeWithAttributes)
@@ -65,7 +70,7 @@ namespace Distill.Types
 
     public EnvDTE.vsCMElement Kind
     {
-      get { throw new NotImplementedException(); }
+      get { return EnvDTE.vsCMElement.vsCMElementVariable; }
     }
 
     public string Language
@@ -75,14 +80,8 @@ namespace Distill.Types
 
     public string Name
     {
-      get
-      {
-        throw new NotImplementedException();
-      }
-      set
-      {
-        throw new NotImplementedException();
-      }
+      get;
+      set;
     }
 
     public EnvDTE.ProjectItem ProjectItem

@@ -120,18 +120,33 @@ List<System::Object ^>^ MapVariables(std::vector<DistillCodeVariableWrapper> &va
 }
 
 
+List<System::Object ^>^ MapUnion(std::vector<DistillCodeStructWrapper> &unionMembers)
+{
+	int length = unionMembers.size();
+	List<System::Object ^>^ c = gcnew List<System::Object ^>();
+	for (int i = 0 ; i<length; ++i)
+	{
+		DistillCodeStruct ^cl = gcnew DistillCodeStruct(EnvDTE::vsCMElement::vsCMElementUnion);
+		cl->Name = ToManagedString(unionMembers[i].Name.c_str());
+		cl->FullName = ToManagedString(unionMembers[i].FullName.c_str());
+		c->Add(cl);
+	}
+
+	return c;
+}
+
+
 List<System::Object ^>^ MapStruct(std::vector<DistillCodeStructWrapper> &structMembers)
 {
 	int length = structMembers.size();
 	List<System::Object ^>^ c = gcnew List<System::Object ^>();
 	for (int i = 0 ; i<length; ++i)
 	{
-		DistillCodeStruct ^cl = gcnew DistillCodeStruct();
+		DistillCodeStruct ^cl = gcnew DistillCodeStruct(EnvDTE::vsCMElement::vsCMElementStruct);
 		cl->Name = ToManagedString(structMembers[i].Name.c_str());
 		cl->FullName = ToManagedString(structMembers[i].FullName.c_str());
 		c->Add(cl);
 	}
-
 	return c;
 }
 
@@ -152,7 +167,8 @@ DistillFileCodeModel^ CodeModelProvider::Process(String ^contents)
 	std::vector<DistillCodeFunctionWrapper> methods;
 	std::vector<DistillCodeVariableWrapper> variables;
 	std::vector<DistillCodeStructWrapper> structs;
-	DistillFrontendAction action (classes, functions, methods, variables, structs);
+	std::vector<DistillCodeStructWrapper> unions;
+	DistillFrontendAction action (classes, functions, methods, variables, structs, unions);
 	m_pInstance->ExecuteAction (action);
 
 	DistillFileCodeModel ^model = gcnew DistillFileCodeModel();
@@ -163,12 +179,14 @@ DistillFileCodeModel^ CodeModelProvider::Process(String ^contents)
 	auto methodElements = MapMethods(methods);
 	auto variableElements = MapVariables(variables);
 	auto structElements = MapStruct(structs);
+	auto unionElements = MapUnion(unions);
 
 	elements->AddRange(classElements);
 	elements->AddRange(functionElements);
 	elements->AddRange(methodElements);
 	elements->AddRange(variableElements);
 	elements->AddRange(structElements);
+	elements->AddRange(unionElements);
 
 
 	Marshal::FreeHGlobal(IntPtr((void *)pContents));

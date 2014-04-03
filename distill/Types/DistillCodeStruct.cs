@@ -8,6 +8,14 @@ namespace Distill.Types
   public class DistillCodeStruct : EnvDTE.CodeStruct, EnvDTE.CodeElement
   {
 
+    EnvDTE.vsCMElement kind;
+    public DistillCodeStruct(EnvDTE.vsCMElement kind)
+    {
+      this.kind = kind;
+      
+    }
+
+
     public EnvDTE.CodeElements Children
     {
       get { throw new NotImplementedException(); }
@@ -66,7 +74,7 @@ namespace Distill.Types
 
     public EnvDTE.vsCMElement Kind
     {
-      get { throw new NotImplementedException(); }
+      get { return kind; }
     }
 
     public string Language

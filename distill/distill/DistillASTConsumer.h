@@ -18,8 +18,9 @@ namespace Distill
 			std::vector<DistillCodeFunctionWrapper>& functions,
 			std::vector<DistillCodeFunctionWrapper>&   methods,
 			std::vector<DistillCodeVariableWrapper>& variables,
-			std::vector<DistillCodeStructWrapper>& structs
-			) : m_Visitor(classes, functions, methods, variables, structs){}
+			std::vector<DistillCodeStructWrapper>& structs,
+			std::vector<DistillCodeStructWrapper>& unions
+			) : m_Visitor(classes, functions, methods, variables, structs, unions){}
 
 		virtual void HandleTranslationUnit(clang::ASTContext &Context) {
 			m_Visitor.TraverseDecl(Context.getTranslationUnitDecl());

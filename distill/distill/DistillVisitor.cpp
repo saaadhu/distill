@@ -19,7 +19,7 @@ bool DistillVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 		return true;
 	}
 
-	else if (kind == clang::TagTypeKind::TTK_Struct || kind == clang::TagTypeKind::TTK_Union)
+	else if (kind == clang::TagTypeKind::TTK_Struct)
 	{
 		DistillCodeStructWrapper w;
 		w.Name = Declaration->getNameAsString();
@@ -27,7 +27,36 @@ bool DistillVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 		m_struct.push_back (w);
 		return true;
 	}
+
+	else if (kind == clang::TagTypeKind::TTK_Union)
+	{
+		DistillCodeStructWrapper w;
+		w.Name = Declaration->getNameAsString();
+		w.FullName = Declaration->getQualifiedNameAsString();
+		m_union.push_back (w);
+		return true;
+	}
+
+	return false;
 }
+
+
+bool DistillVisitor::VisitVarDecl(clang::VarDecl *Declaration)
+{
+
+	DistillCodeVariableWrapper w;
+	w.Name = Declaration->getNameAsString();
+	w.FullName = Declaration->getQualifiedNameAsString();
+	m_variables.push_back (w);
+	return true;
+}
+
+bool DistillVisitor::VisitFieldDecl(clang::FieldDecl *Declaration)
+{
+	return true;
+}
+
+
 
 bool DistillVisitor::VisitFunctionDecl(clang::FunctionDecl *Declaration)
 {
