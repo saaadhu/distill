@@ -35,6 +35,19 @@ namespace Distill.Tests
             Assert.AreEqual("Foo::Crap", ((DistillCodeFunction) model.CodeElements.Item(0)).FullName);
         }
 
+        [TestMethod]
+        public void CppFunction_Rename_ReturnsOriginalCodeWithJustNameChange()
+        {
+            var text = @"namespace Foo { void Crap() {} }";
+            var expectedText = @"namespace Foo { void Bull() {} }";
+            var model = provider.Process(text);
+            Assert.AreEqual(1, model.CodeElements.Count);
+            var originalName = ((DistillCodeFunction)model.CodeElements.Item(0)).Name;
+
+            var modifiedText = provider.RenameFunction("Crap", "Bull", text);
+            Assert.AreEqual(expectedText, modifiedText);
+        }
+
         private CodeModelProvider provider;
 
         [TestInitialize]

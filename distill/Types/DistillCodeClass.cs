@@ -97,8 +97,13 @@ namespace Distill.Types
         public string Name
         {
             get { return name; }
-            set { name = value; }
+            set
+            {
+                OriginalName = name; name = value; 
+            }
         }
+
+        public string OriginalName { get; set; }
 
         public string FullName { get; set; }
 
