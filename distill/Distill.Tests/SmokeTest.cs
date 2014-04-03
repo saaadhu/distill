@@ -35,6 +35,27 @@ namespace Distill.Tests
             Assert.AreEqual("Foo::Crap", ((DistillCodeFunction) model.CodeElements.Item(0)).FullName);
         }
 
+
+        [TestMethod]
+        public void TraverseVariable()
+        {
+          var model = provider.Process(@"namespace Foo { int x = 100; }");
+          Assert.AreEqual(1, model.CodeElements.Count);
+          Assert.AreEqual("x", ((DistillCodeVariable)model.CodeElements.Item(0)).Name);
+          Assert.AreEqual("Foo::Crap", ((DistillCodeVariable)model.CodeElements.Item(0)).FullName);          
+        }
+      
+
+
+        [TestMethod]
+        public void TravarseStruct_GetName_ReturnsName()
+        {
+          var model = provider.Process(@"namespace Foo {struct Bar { }; }");
+          Assert.AreEqual(1, model.CodeElements.Count);
+          Assert.AreEqual("Bar", ((DistillCodeStruct)model.CodeElements.Item(0)).Name);
+          Assert.AreEqual("Foo::Bar", ((DistillCodeStruct)model.CodeElements.Item(0)).FullName);          
+        }
+
         private CodeModelProvider provider;
 
         [TestInitialize]
