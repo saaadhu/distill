@@ -98,14 +98,6 @@ namespace Distill.Types
       get { throw new NotImplementedException(); }
     }
 
-    public string Name
-    {
-      get { return name; }
-      set { name = value; }
-    }
-
-    public string FullName { get; set; }
-
     public ProjectItem ProjectItem
     {
       get { throw new NotImplementedException(); }
@@ -228,10 +220,17 @@ namespace Distill.Types
 
     private string name;
 
-
-    dynamic CodeElement.ExtenderNames
+    public string Name
     {
-      get { throw new NotImplementedException(); }
+      get { return name; }
+      set
+      {
+        OriginalName = name; name = value;
+      }
     }
+
+    public string OriginalName { get; set; }
+
+    public string FullName { get; set; }
   }
 }

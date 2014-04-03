@@ -8,10 +8,13 @@
 #include "clang\Frontend\CompilerInstance.h"
 #include "clang\Frontend\FrontendAction.h"
 #include "clang\Frontend\FrontendActions.h"
+#include "clang/Rewrite/Core/Rewriter.h"
+#include "clang/Rewrite/Frontend/Rewriters.h"
 
 #include "distill.h"
 #include "StringUtilities.h"
 #include "DistillFrontendAction.h"
+#include "DistillRewriteFrontendAction.h"
 #include "DistillCodeClassWrapper.h"
 #include "DistillCodeFunctionWrapper.h"
 #include "DistillCodeVariableWrapper.h"
@@ -87,6 +90,30 @@ List<System::Object ^>^ MapFunctions(std::vector<DistillCodeFunctionWrapper> &fu
 	}
 
 	return c;
+}
+
+String^ CodeModelProvider::RenameFunction(String^ oldName, String ^newName, String ^contents)
+{
+	const char *pContents = ToCString(contents);
+	m_pInstance = CreateCompilerInstance();
+	m_pInvocation = CreateInvocation();
+
+	if (pContents)
+		m_pInvocation->getPreprocessorOpts().addRemappedFile(filePath, llvm::MemoryBuffer::getMemBufferCopy(pContents));
+
+	m_pInstance->setInvocation(m_pInvocation);
+
+	std::string modifiedText;
+	DistillRewriteFrontendAction action (ToCString(oldName), ToCString(newName), modifiedText);
+	m_pInstance->ExecuteAction (action);
+
+	m_pInvocation->getPreprocessorOpts().clearRemappedFiles();
+
+	String ^rewrittenText = ToManagedString(modifiedText.c_str());
+	Marshal::FreeHGlobal(IntPtr((void *)pContents));
+
+	DestroyCompilerInstance(m_pInstance);
+	return rewrittenText;
 }
 
 List<System::Object ^>^ MapMethods(std::vector<DistillCodeFunctionWrapper> &methods)

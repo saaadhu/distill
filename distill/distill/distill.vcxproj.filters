@@ -42,6 +42,15 @@
     <ClInclude Include="DistillCodeFunctionWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DistillRewriteFrontEndAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DistillRewriteASTConsumer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DistillRewriteVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="DistillCodeVariableWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -60,6 +69,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DistillVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DistillRewriteVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

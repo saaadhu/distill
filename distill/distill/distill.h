@@ -35,6 +35,7 @@ namespace Distill {
 	public:
 		CodeModelProvider (String ^file, List<String ^> ^pSymbols, List<String ^> ^iPaths, Language lang, Arch a);
 		Distill::Types::DistillFileCodeModel ^Process(String^ contents);
+		String^ RenameFunction(String^ oldName, String ^newName, String ^contents);
 
 	private:
 

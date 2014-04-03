@@ -87,6 +87,9 @@
     <ClInclude Include="DistillCodeFunctionWrapper.h" />
     <ClInclude Include="DistillCodeVariableWrapper.h" />
     <ClInclude Include="DistillFrontEndAction.h" />
+    <ClInclude Include="DistillRewriteASTConsumer.h" />
+    <ClInclude Include="DistillRewriteFrontEndAction.h" />
+    <ClInclude Include="DistillRewriteVisitor.h" />
     <ClInclude Include="DistillVisitor.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
@@ -95,6 +98,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="distill.cpp" />
+    <ClCompile Include="DistillRewriteVisitor.cpp" />
     <ClCompile Include="DistillVisitor.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
