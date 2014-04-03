@@ -71,6 +71,21 @@ List<System::Object ^>^ MapClasses(std::vector<DistillCodeClassWrapper> &classes
 	return c;
 }
 
+List<System::Object ^>^ MapFunctions(std::vector<DistillCodeFunctionWrapper> &functions)
+{
+	int length = functions.size();
+	List<System::Object ^>^ c = gcnew List<System::Object ^>();
+	for (int i = 0 ; i<length; ++i)
+	{
+		DistillCodeFunction ^cl = gcnew DistillCodeFunction();
+		cl->Name = ToManagedString(functions[i].Name.c_str());
+		cl->FullName = ToManagedString(functions[i].FullName.c_str());
+		c->Add(cl);
+	}
+
+	return c;
+}
+
 DistillFileCodeModel^ CodeModelProvider::Process(String ^contents)
 {
 	const char *pContents = ToCString(contents);
@@ -83,18 +98,24 @@ DistillFileCodeModel^ CodeModelProvider::Process(String ^contents)
 	m_pInstance->setInvocation(m_pInvocation);
 
 	std::vector<DistillCodeClassWrapper> classes;
-	DistillFrontendAction action (classes);
+	std::vector<DistillCodeFunctionWrapper> functions;
+	DistillFrontendAction action (classes, functions);
 	m_pInstance->ExecuteAction (action);
 
 	DistillFileCodeModel ^model = gcnew DistillFileCodeModel();
+	List<Object ^>^ elements = gcnew List<Object ^>();
+
 	auto classElements = MapClasses(classes);
+	auto functionElements = MapFunctions (functions);
+
+	elements->AddRange(classElements);
+	elements->AddRange(functionElements);
 
 	Marshal::FreeHGlobal(IntPtr((void *)pContents));
 	m_pInvocation->getPreprocessorOpts().clearRemappedFiles();
 
 	DestroyCompilerInstance(m_pInstance);
-	DistillCodeElements ^elements = gcnew DistillCodeElements(classElements);
-	model->CodeElements = elements;
+	model->CodeElements = gcnew DistillCodeElements(elements);
 	return model;
 }
 

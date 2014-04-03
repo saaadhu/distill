@@ -26,6 +26,15 @@ namespace Distill.Tests
             Assert.AreEqual("Foo::MyClass", ((DistillCodeClass) model.CodeElements.Item(0)).FullName);
         }
 
+        [TestMethod]
+        public void CppFunction_GetNameAndFullName_ReturnsNameAndFQName()
+        {
+            var model = provider.Process(@"namespace Foo { void Crap() {} }");
+            Assert.AreEqual(1, model.CodeElements.Count);
+            Assert.AreEqual("Crap", ((DistillCodeFunction) model.CodeElements.Item(0)).Name);
+            Assert.AreEqual("Foo::Crap", ((DistillCodeFunction) model.CodeElements.Item(0)).FullName);
+        }
+
         private CodeModelProvider provider;
 
         [TestInitialize]

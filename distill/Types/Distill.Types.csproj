@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="DistillCodeClass.cs" />
     <Compile Include="DistillCodeElements.cs" />
+    <Compile Include="DistillCodeFunction.cs" />
     <Compile Include="DistillFileCodeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

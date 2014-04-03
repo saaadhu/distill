@@ -6,6 +6,7 @@
 #include "clang/Frontend/FrontendAction.h"
 #include "clang/Tooling/Tooling.h"
 #include "DistillCodeClassWrapper.h"
+#include "DistillCodeFunctionWrapper.h"
 #include <vector>
 
 namespace Distill
@@ -14,12 +15,17 @@ namespace Distill
 	{
 	public:
 
-		DistillVisitor(std::vector<DistillCodeClassWrapper>& classes) : m_classes(classes) {}
+		DistillVisitor(std::vector<DistillCodeClassWrapper>& classes,
+			std::vector<DistillCodeFunctionWrapper>& functions
+			) : m_classes(classes), m_functions(functions) {}
 
 		bool TraverseDecl(clang::Decl *D);
 		bool VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration);
+		bool VisitFunctionDecl(clang::FunctionDecl *Declaration);
+		bool VisitCXXMethodDecl(clang::FunctionDecl *Declaration);
 
 	private:
 		std::vector<DistillCodeClassWrapper> &m_classes;
+		std::vector<DistillCodeFunctionWrapper> &m_functions;
 	};
 }
