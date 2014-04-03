@@ -11,6 +11,7 @@ bool DistillVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 {
 	DistillCodeClassWrapper w;
 	w.Name = Declaration->getNameAsString();
+	w.FullName = Declaration->getQualifiedNameAsString();
 	m_classes.push_back (w);
 	return true;
 }

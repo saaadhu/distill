@@ -11,13 +11,31 @@ namespace Distill.Tests
     public class SmokeTest
     {
         [TestMethod]
-        public void Foo()
+        public void CppClass_GetName_ReturnsName()
         {
-            var provider = new CodeModelProvider(@"E:\Test.cpp", new List<string>(), new List<string>(),
-                                                 Language.CPlusPlus, Arch.AVR32);
             var model = provider.Process(@"class MyClass{};");
             Assert.AreEqual(1, model.CodeElements.Count);
             Assert.AreEqual("MyClass", ((DistillCodeClass) model.CodeElements.Item(0)).Name);
         }
+
+        [TestMethod]
+        public void CppClass_GetFullName_ReturnsFQName()
+        {
+            var model = provider.Process(@"namespace Foo { class MyClass{}; }");
+            Assert.AreEqual(1, model.CodeElements.Count);
+            Assert.AreEqual("Foo::MyClass", ((DistillCodeClass) model.CodeElements.Item(0)).FullName);
+        }
+
+        private CodeModelProvider provider;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            provider = new CodeModelProvider(@"E:\Test.cpp", new List<string>(), new List<string>(),
+                                                 Language.CPlusPlus, Arch.AVR32);
+        }
+
+
+
     }
 }

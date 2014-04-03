@@ -6,5 +6,6 @@ namespace Distill
 	{
 	public:
 		std::string Name;
+		std::string FullName;
 	};
 }

@@ -100,10 +100,7 @@ namespace Distill.Types
             set { name = value; }
         }
 
-        public string FullName
-        {
-            get { return Name; }
-        }
+        public string FullName { get; set; }
 
         public ProjectItem ProjectItem
         {
