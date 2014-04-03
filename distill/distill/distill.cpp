@@ -16,6 +16,9 @@
 #include "DistillFrontendAction.h"
 #include "DistillRewriteFrontendAction.h"
 #include "DistillCodeClassWrapper.h"
+#include "DistillCodeFunctionWrapper.h"
+#include "DistillCodeVariableWrapper.h"
+#include "DistillCodeStructWrapper.h"
 
 using namespace Distill;
 using namespace Distill::Types;
@@ -113,6 +116,53 @@ String^ CodeModelProvider::RenameFunction(String^ oldName, String ^newName, Stri
 	return rewrittenText;
 }
 
+List<System::Object ^>^ MapMethods(std::vector<DistillCodeFunctionWrapper> &methods)
+{
+	int length = methods.size();
+	List<System::Object ^>^ c = gcnew List<System::Object ^>();
+	for (int i = 0 ; i<length; ++i)
+	{
+		DistillCodeFunction ^cl = gcnew DistillCodeFunction();
+		cl->Name = ToManagedString(methods[i].Name.c_str());
+		cl->FullName = ToManagedString(methods[i].FullName.c_str());
+		c->Add(cl);
+	}
+
+	return c;
+}
+
+List<System::Object ^>^ MapVariables(std::vector<DistillCodeVariableWrapper> &variables)
+{
+	int length = variables.size();
+	List<System::Object ^>^ c = gcnew List<System::Object ^>();
+	for (int i = 0 ; i<length; ++i)
+	{
+		DistillCodeVariable ^cl = gcnew DistillCodeVariable();
+		cl->Name = ToManagedString(variables[i].Name.c_str());
+		cl->FullName = ToManagedString(variables[i].FullName.c_str());
+		c->Add(cl);
+	}
+
+	return c;
+}
+
+
+List<System::Object ^>^ MapStruct(std::vector<DistillCodeStructWrapper> &structMembers)
+{
+	int length = structMembers.size();
+	List<System::Object ^>^ c = gcnew List<System::Object ^>();
+	for (int i = 0 ; i<length; ++i)
+	{
+		DistillCodeStruct ^cl = gcnew DistillCodeStruct();
+		cl->Name = ToManagedString(structMembers[i].Name.c_str());
+		cl->FullName = ToManagedString(structMembers[i].FullName.c_str());
+		c->Add(cl);
+	}
+
+	return c;
+}
+
+
 DistillFileCodeModel^ CodeModelProvider::Process(String ^contents)
 {
 	const char *pContents = ToCString(contents);
@@ -126,7 +176,10 @@ DistillFileCodeModel^ CodeModelProvider::Process(String ^contents)
 
 	std::vector<DistillCodeClassWrapper> classes;
 	std::vector<DistillCodeFunctionWrapper> functions;
-	DistillFrontendAction action (classes, functions);
+	std::vector<DistillCodeFunctionWrapper> methods;
+	std::vector<DistillCodeVariableWrapper> variables;
+	std::vector<DistillCodeStructWrapper> structs;
+	DistillFrontendAction action (classes, functions, methods, variables, structs);
 	m_pInstance->ExecuteAction (action);
 
 	DistillFileCodeModel ^model = gcnew DistillFileCodeModel();
@@ -134,9 +187,16 @@ DistillFileCodeModel^ CodeModelProvider::Process(String ^contents)
 
 	auto classElements = MapClasses(classes);
 	auto functionElements = MapFunctions (functions);
+	auto methodElements = MapMethods(methods);
+	auto variableElements = MapVariables(variables);
+	auto structElements = MapStruct(structs);
 
 	elements->AddRange(classElements);
 	elements->AddRange(functionElements);
+	elements->AddRange(methodElements);
+	elements->AddRange(variableElements);
+	elements->AddRange(structElements);
+
 
 	Marshal::FreeHGlobal(IntPtr((void *)pContents));
 	m_pInvocation->getPreprocessorOpts().clearRemappedFiles();

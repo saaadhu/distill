@@ -7,6 +7,8 @@
 #include "clang/Tooling/Tooling.h"
 #include "DistillCodeClassWrapper.h"
 #include "DistillCodeFunctionWrapper.h"
+#include "DistillCodeVariableWrapper.h"
+#include "DistillCodeStructWrapper.h"
 #include <vector>
 
 namespace Distill
@@ -16,8 +18,11 @@ namespace Distill
 	public:
 
 		DistillVisitor(std::vector<DistillCodeClassWrapper>& classes,
-			std::vector<DistillCodeFunctionWrapper>& functions
-			) : m_classes(classes), m_functions(functions) {}
+			std::vector<DistillCodeFunctionWrapper>& functions,
+			std::vector<DistillCodeFunctionWrapper>& methods,
+			std::vector<DistillCodeVariableWrapper>& variables,
+			std::vector<DistillCodeStructWrapper>& structs
+			) : m_classes(classes), m_functions(functions), m_methods(methods), m_variables(variables), m_struct(structs) {}
 
 		bool TraverseDecl(clang::Decl *D);
 		bool VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration);
@@ -27,5 +32,8 @@ namespace Distill
 	private:
 		std::vector<DistillCodeClassWrapper> &m_classes;
 		std::vector<DistillCodeFunctionWrapper> &m_functions;
+		std::vector<DistillCodeFunctionWrapper> &m_methods;
+		std::vector<DistillCodeVariableWrapper> &m_variables;
+		std::vector<DistillCodeStructWrapper> &m_struct;
 	};
 }

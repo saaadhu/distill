@@ -51,6 +51,9 @@
     <ClInclude Include="DistillRewriteVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DistillCodeVariableWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="distill.cpp">
@@ -76,6 +79,9 @@
     <None Include="ReadMe.txt" />
     <None Include="app.ico">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="DistillCodeStructWrapper.h">
+      <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
