@@ -54,7 +54,7 @@ namespace Distill.Types
 
         public vsCMElement Kind
         {
-            get { throw new NotImplementedException(); }
+          get { return vsCMElement.vsCMElementFunction; }
         }
 
         public bool IsCodeType

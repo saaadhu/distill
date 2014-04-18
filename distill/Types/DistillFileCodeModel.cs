@@ -8,6 +8,13 @@ namespace Distill.Types
 {
     public class DistillFileCodeModel : FileCodeModel
     {
+
+      public object Provider
+      {
+        set;
+        get;
+      }
+
         public CodeElement CodeElementFromPoint(TextPoint Point, vsCMElement Scope)
         {
             throw new NotImplementedException();

@@ -91,6 +91,7 @@
     <ClInclude Include="DistillRewriteFrontEndAction.h" />
     <ClInclude Include="DistillRewriteVisitor.h" />
     <ClInclude Include="DistillVisitor.h" />
+    <ClInclude Include="TokenContainer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="StringUtilities.h" />
@@ -105,6 +106,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="StringUtilities.cpp" />
+    <ClCompile Include="TokenContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.ico" />

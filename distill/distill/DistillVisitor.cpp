@@ -15,7 +15,7 @@ bool DistillVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 		DistillCodeClassWrapper w;
 		w.Name = Declaration->getNameAsString();
 		w.FullName = Declaration->getQualifiedNameAsString();
-		m_classes.push_back (w);
+		m_container.classes.push_back (w);
 		return true;
 	}
 
@@ -24,7 +24,7 @@ bool DistillVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 		DistillCodeStructWrapper w;
 		w.Name = Declaration->getNameAsString();
 		w.FullName = Declaration->getQualifiedNameAsString();
-		m_struct.push_back (w);
+		m_container.structs.push_back (w);
 		return true;
 	}
 
@@ -33,7 +33,7 @@ bool DistillVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 		DistillCodeStructWrapper w;
 		w.Name = Declaration->getNameAsString();
 		w.FullName = Declaration->getQualifiedNameAsString();
-		m_union.push_back (w);
+		m_container.unions.push_back (w);
 		return true;
 	}
 
@@ -47,7 +47,7 @@ bool DistillVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 	DistillCodeVariableWrapper w;
 	w.Name = Declaration->getNameAsString();
 	w.FullName = Declaration->getQualifiedNameAsString();
-	m_variables.push_back (w);
+	m_container.variables.push_back (w);
 	return true;
 }
 
@@ -63,7 +63,7 @@ bool DistillVisitor::VisitFunctionDecl(clang::FunctionDecl *Declaration)
 	DistillCodeFunctionWrapper w;
 	w.Name = Declaration->getNameAsString();
 	w.FullName = Declaration->getQualifiedNameAsString();
-	m_functions.push_back (w);
+	m_container.functions.push_back (w);
 	return true;
 }
 
@@ -72,7 +72,7 @@ bool DistillVisitor::VisitCXXMethodDecl(clang::FunctionDecl *Declaration)
 	DistillCodeFunctionWrapper w;
 	w.Name = Declaration->getNameAsString();
 	w.FullName = Declaration->getQualifiedNameAsString();
-	m_functions.push_back (w);
+	m_container.methods.push_back (w);
 	return true;
 }
 
